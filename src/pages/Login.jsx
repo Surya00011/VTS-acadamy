@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../context/Authcontext.jsx";
+import { FaGraduationCap } from "react-icons/fa";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -8,18 +9,48 @@ const Login = () => {
   const [error, setError] = useState("");
   const { login } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
 
-  const handleSubmit = (e) => {
+  const from = location.state?.from?.pathname || "/";
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (login(email, password)) navigate("/courses");
-    else setError("Invalid credentials");
+    setError("");
+
+    try {
+      const success = await login(email, password);
+      if (success) {
+        if (email === "test@admin.com" && password === "1234") {
+          navigate("/admin", { replace: true });
+        } else {
+          navigate(from, { replace: true });
+        }
+      } else {
+        setError("Invalid credentials");
+      }
+    } catch (err) {
+      setError("Login failed. Please try again.");
+    }
   };
 
   return (
-    
-    <div className="container mt-5 d-flex justify-content-center"> 
-      
-      <div className="card p-4 shadow" style={{ width: "100%", maxWidth: "400px" }}>
+    <div className="container mt-5 d-flex flex-column align-items-center">
+      {/* Header with icon and title */}
+      <div className="mb-4 text-center" style={{ color: "#ff6600" }}>
+        <FaGraduationCap size={50} />
+        <h1
+          className="mt-2"
+          style={{ fontWeight: "bold", letterSpacing: "2px" }}
+        >
+          VTS ACADEMY
+        </h1>
+      </div>
+
+      {/* Login Card */}
+      <div
+        className="card p-4 shadow"
+        style={{ width: "100%", maxWidth: "400px" }}
+      >
         <div className="card-body">
           <h3 className="card-title text-center mb-4">Login</h3>
           {error && <div className="alert alert-danger">{error}</div>}

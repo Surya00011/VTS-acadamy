@@ -1,17 +1,16 @@
-import { BrowserRouter as Router } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import AppRoutes from "./routes/AppRoutes";
-
 import { AuthProvider } from "./context/Authcontext.jsx";
-import NavScrollExample from "./components/NavScrollExample.jsx";
+import NavBar from "./components/NavBar.jsx";
 
 function App() {
   return (
-    <AuthProvider>
-      <NavScrollExample />
-      <Router>
+    <BrowserRouter>
+      <AuthProvider>
+        <NavBar />
         <AppRoutes />
-      </Router>
-    </AuthProvider>
+      </AuthProvider>
+    </BrowserRouter>
   );
 }
 

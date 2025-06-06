@@ -5,6 +5,9 @@ import Register from "../pages/Register";
 import CourseList from "../pages/CourseList";
 import CourseDetail from "../pages/CourseDetail";
 import ProtectedRoute from "../components/ProtectedRoute";
+import Admin from "../pages/admin";
+import About from "../pages/About";
+import Cart from "../pages/Cart";
 
 const AppRoutes = () => (
   <Routes>
@@ -12,21 +15,17 @@ const AppRoutes = () => (
     <Route path="/login" element={<Login />} />
     <Route path="/register" element={<Register />} />
     <Route
-      path="/courses"
+      path="/admin"
       element={
         <ProtectedRoute>
-          <CourseList />
+          <Admin />
         </ProtectedRoute>
       }
     />
-    <Route
-      path="/courses/:id"
-      element={
-        <ProtectedRoute>
-          <CourseDetail />
-        </ProtectedRoute>
-      }
-    />
+    <Route path="/courses" element={<CourseList />} />
+    <Route path="/courses/:id" element={<CourseDetail />} />
+    <Route path="/about" element={<About />} />
+    <Route path="/cart" element={<Cart />} />
   </Routes>
 );
 

@@ -6,7 +6,7 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
   const login = (email, password) => {
-    if (email === "test@example.com" && password === "1234") {
+    if (email === "test@admin.com" && password === "1234") {
       setUser({ email });
       return true;
     }
