@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import CourseCard from "../components/CouseCard.jsx";
 import Footer from "../components/Footer.jsx";
+import { courses as defaultCourses } from "../constants/courses.js";
 
 const Home = () => {
   const [courses, setCourses] = useState([]);
@@ -9,6 +10,9 @@ const Home = () => {
     const storedCourses = localStorage.getItem("courses");
     if (storedCourses) {
       setCourses(JSON.parse(storedCourses));
+    } else {
+      setCourses(defaultCourses);
+      localStorage.setItem("courses", JSON.stringify(defaultCourses));
     }
   }, []);
 
@@ -57,10 +61,10 @@ const Home = () => {
           <p>No courses found. Please add some from Admin panel.</p>
         )}
       </div>
-      {/* Footer Section */}
-      <Footer/>
-    </div> 
 
+      {/* Footer Section */}
+      <Footer />
+    </div>
   );
 };
 
