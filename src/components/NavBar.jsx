@@ -7,6 +7,7 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { FaCartShopping } from "react-icons/fa6";
+import { courses as defaultCourses } from "../constants/courses"; 
 
 function NavBar() {
   const [courses, setCourses] = useState([]);
@@ -14,8 +15,13 @@ function NavBar() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const storedCourses = JSON.parse(localStorage.getItem("courses")) || [];
-    setCourses(storedCourses);
+    const storedCourses = JSON.parse(localStorage.getItem("courses"));
+    if (storedCourses && storedCourses.length > 0) {
+      setCourses(storedCourses);
+    } else {
+      setCourses(defaultCourses);
+      localStorage.setItem("courses", JSON.stringify(defaultCourses));
+    }
   }, []);
 
   const handleSearch = (e) => {
@@ -43,7 +49,7 @@ function NavBar() {
           style={{ color: "white", fontWeight: "bold" }}
         >
           <img
-            src="public/images.jpeg"
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQyZFbnyGrRjGc5REK09YVDAl3lxMBi2KC3Mw&s"
             alt="Logo"
             width="30"
             height="30"
@@ -83,10 +89,15 @@ function NavBar() {
               )}
             </NavDropdown>
           </Nav>
-          <Nav.Link as={Link} to="/login" style={{ color: "black" }} className="me-3">
+          <Nav.Link
+            as={Link}
+            to="/login"
+            style={{ color: "black" }}
+            className="me-3"
+          >
             Login
           </Nav.Link>
-        
+
           <Form className="d-flex" onSubmit={handleSearch}>
             <Form.Control
               type="search"
